@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
 
         fetchDocumentsByAspect(id) {
             this.isLoading = true;
-            axios.get(`http://localhost:3000/documents/aspect/${id}`)
+            axios.get(`https://sika-info-server.vercel.app/documents/aspect/${id}`)
                 .then((response) => {
                     this.documents = response.data.data
                     console.log("documents", this.documents);
@@ -32,7 +32,7 @@ export const useAuthStore = defineStore('auth', {
         async fetchAspectsByLanguage(language) {
             try {
 
-                const response = await axios.get(`http://localhost:3000/aspects/all-aspects/${language}`);
+                const response = await axios.get(`https://sika-info-server.vercel.app/aspects/all-aspects/${language}`);
                 this.aspectsList = response.data.aspects;
 
                 const aspectId = this.$route?.query?.aspectId;
@@ -57,14 +57,14 @@ export const useAuthStore = defineStore('auth', {
         },
 
         fetchDocuments(lang) {
-            axios.get(`http://localhost:3000/documents/all-documents/${lang}`)
+            axios.get(`https://sika-info-server.vercel.app/documents/all-documents/${lang}`)
                 .then((response) => { this.AllDocuments = response.data.data; console.log("documents ------------", this.documents) })
                 .catch((error) => console.error(error));
         },
 
         fetchDocumentsByAspectAndCategory(aspectId, categoryId) {
             this.isLoading = true;
-            axios.get(`http://localhost:3000/documents/aspect/${aspectId}/category/${categoryId}`)
+            axios.get(`https://sika-info-server.vercel.app/documents/aspect/${aspectId}/category/${categoryId}`)
                 .then((response) => {
                     this.documents = response.data.data
                     console.log("documents", this.documents);
@@ -73,7 +73,7 @@ export const useAuthStore = defineStore('auth', {
                 .catch((error) => { console.error(error); this.isLoading = false; });
         },
         fetchCategoriesByLanguage(language) {
-            axios.get(`http://localhost:3000/categories/all-categories/${language}`)
+            axios.get(`https://sika-info-server.vercel.app/categories/all-categories/${language}`)
                 .then((response) => {
                     this.categoriesList = response.data.categories;
                 })

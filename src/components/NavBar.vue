@@ -82,7 +82,7 @@ export default {
             return this.Store.AllDocuments.filter(document => document.title.includes(this.inputSearched));
         },
         openNewWindow(pdf) {
-            const fullPath = `http://localhost:3000/files/${pdf}`;
+            const fullPath = `https://sika-info-server.vercel.app/files/${pdf}`;
 
             // Open the URL in a new window
             window.open(fullPath, '_blank');
