@@ -10,13 +10,14 @@
                 <input :class="this.$i18n.locale == 'fr' ? 'input-french' : 'input-arabe'"
                     :placeholder="$t('Chercher un document')" v-model="inputSearched" type="text"><font-awesome-icon
                     class="icon" v-if="!inputSearched" :icon="['fas', 'magnifying-glass']" />
-                <font-awesome-icon class="icon xmark" @click="this.inputSearched = ''" v-else :icon="['fas', 'xmark']" />
+                <font-awesome-icon class="icon xmark" @click="this.inputSearched = ''" v-else
+                    :icon="['fas', 'xmark']" />
 
                 <div v-if="filteredDocuments" class="dropdown">
                     <div v-for="document in filteredDocuments" @click="openNewWindow(document.pdf)"
                         :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" :key="document._id" class="document-row">{{
-                            document.title
-                        }}</div>
+                document.title
+            }}</div>
                 </div>
             </div>
         </div>
@@ -36,7 +37,7 @@
 
     </nav>
 </template>
-  
+
 <script>
 import { useAuthStore } from "../store/index";
 
@@ -82,7 +83,7 @@ export default {
             return this.Store.AllDocuments.filter(document => document.title.includes(this.inputSearched));
         },
         openNewWindow(pdf) {
-            const fullPath = `https://sika-info-server.vercel.app/files/${pdf}`;
+            const fullPath = `https://sika-info-server.vercel.app/images/${pdf}`;
 
             // Open the URL in a new window
             window.open(fullPath, '_blank');
@@ -98,7 +99,7 @@ export default {
     }
 };
 </script>
-  
+
 <style scoped>
 nav {
     width: 100%;
@@ -297,4 +298,3 @@ h4 {
     }
 }
 </style>
-  
