@@ -83,7 +83,7 @@ export default {
             return this.Store.AllDocuments.filter(document => document.title.includes(this.inputSearched));
         },
         openNewWindow(pdf) {
-            const fullPath = `https://sika-info-server.vercel.app/images/${pdf}`;
+            const fullPath = `https://sika-info-server.vercel.app/${pdf}`;
 
             // Open the URL in a new window
             window.open(fullPath, '_blank');

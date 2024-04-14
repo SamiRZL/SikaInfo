@@ -1,14 +1,13 @@
 <template>
   <div class="pdf-container">
     <div class="transparent"></div>
-    <iframe class="pdf-iframe"
-      :src="`https://sika-info-server.vercel.app/images/${this.document.pdf}#toolbar=0&view=FitH`" frameborder="0"
-      scrolling="no"></iframe>
+    <iframe class="pdf-iframe" :src="`https://sika-info-server.vercel.app/${this.document.pdf}#toolbar=0&view=FitH`"
+      frameborder="0" scrolling="no"></iframe>
     <div class="separator"></div>
     <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="info-document">
       <span class="category">{{ this.document.category.name }}</span>
       <span @click="openNewWindow(this.document.pdf)" class="title">{{
-        this.document.title }}</span>
+      this.document.title }}</span>
     </div>
   </div>
 </template>
@@ -23,7 +22,7 @@ export default {
   },
   methods: {
     openNewWindow(pdf) {
-      const fullPath = `https://sika-info-server.vercel.app/images/${pdf}`;
+      const fullPath = `https://sika-info-server.vercel.app/${pdf}`;
 
       // Open the URL in a new window
       window.open(fullPath, '_blank');
