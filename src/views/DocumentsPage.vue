@@ -174,13 +174,14 @@ export default {
 }
 
 .aspects-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Creates 4 columns with equal width */
+    gap: 10px;
     width: 80%;
-    justify-content: center;
-    align-items: center;
     border-bottom: 1px solid #8EC8F6;
     padding-bottom: 1rem;
-    gap: 5px;
+
 }
 
 .nbr-aspects {
