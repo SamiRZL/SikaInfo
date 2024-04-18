@@ -1,5 +1,5 @@
 <template>
-    <div class="home-container">
+    <div v-if="!this.Store.isLoading" class="home-container">
         <div class="aspects-wrapper">
             <div v-for="(aspect, index) in this.Store.aspectsList" :key="index" @click="this.pushAspectId(aspect?._id)"
                 :class="{ 'aspects': true, 'active-aspect': aspect?._id === this.$route.query?.aspectId || (index == 0 && !this.$route?.query?.aspectId) }">
@@ -25,7 +25,8 @@
             <swiper class="swiper-container" :modules="modules" :slides-per-view="4" :space-between="50" navigation
                 :pagination="{ clickable: true }" :loop="true" :scrollbar="{ draggable: true }" @swiper="onSwiper"
                 @slideChange="onSlideChange" :autoplay="{ delay: 2500, disableOnInteraction: true }" :speed="500">
-                <swiper-slide class="swiper-slide" v-for="(document, index) in this.Store.documents.slice(-5)" :key="index">
+                <swiper-slide class="swiper-slide" v-for="(document, index) in this.Store.documents.slice(-5)"
+                    :key="index">
                     <DocumentComponent :document="document" />
                 </swiper-slide>
             </swiper>
@@ -34,7 +35,8 @@
             </div>
 
             <div class="documents-wrapper">
-                <DocumentComponent v-for="(document, index) in this.Store.documents" :key="index" :document="document" />
+                <DocumentComponent v-for="(document, index) in this.Store.documents" :key="index"
+                    :document="document" />
             </div>
         </div>
 
@@ -42,16 +44,16 @@
             <img src="../assets/file-document-svgrepo-com.svg" alt=""> Aucun document dans cet aspect pour le moment
         </div>
     </div>
-    <!-- <div v-else-if="this.Store.isLoading" class="loading-container">
+    <div v-else class="loading-container">
         <LoaderSpinner :color="blue" />
-    </div>-->
+    </div>
 </template>
-  
+
 <script>
 import DocumentComponent from "../components/Document";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { useAuthStore } from "../store/index";
-//import LoaderSpinner from "@/components/LoaderSpinner.vue";
+import LoaderSpinner from "@/components/LoaderSpinner.vue";
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper";
 export default {
     name: 'LandingPage',
@@ -59,7 +61,7 @@ export default {
         DocumentComponent,
         Swiper,
         SwiperSlide,
-        // LoaderSpinner
+        LoaderSpinner
     },
     data() {
         return {
@@ -103,7 +105,7 @@ export default {
 
 };
 </script>
-  
+
 <style scoped>
 @import 'swiper/css';
 @import 'swiper/css/navigation';
@@ -192,14 +194,14 @@ export default {
 }
 
 .aspects-wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* Creates 4 columns with equal width */
+    gap: 10px;
     width: 80%;
-    justify-content: center;
-    align-items: center;
     border-bottom: 1px solid #8EC8F6;
     padding-bottom: 1rem;
 
-    gap: 5px;
 }
 
 .nbr-aspects {

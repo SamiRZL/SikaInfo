@@ -13,8 +13,8 @@ export default {
 .blue-loader {
     border: 4px solid #2196f3;
     border-left-color: transparent;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     animation: spin89345 1s linear infinite;
     border-radius: 50%;
 }

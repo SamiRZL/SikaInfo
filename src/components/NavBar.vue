@@ -4,7 +4,8 @@
             <div @click="this.$router.push({
                 path: `/`,
             });" class="logo">
-                <span>Sika </span> Info
+                <img class="icon" src="../assets/Image3.png" alt="">
+                <img class="label" src="../assets/Image4.png" alt="">
             </div>
             <div class="search-bar">
                 <input :class="this.$i18n.locale == 'fr' ? 'input-french' : 'input-arabe'"
@@ -128,9 +129,9 @@ nav {
 }
 
 .logo {
-    width: 10%;
+    width: 5%;
     color: #fff;
-    height: 3rem;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -138,11 +139,25 @@ nav {
     font-size: 2rem;
     cursor: pointer;
 
+
+
     span {
         color: #f39c12;
         font-family: 'Lobster';
         margin-right: 5px;
     }
+
+
+}
+
+.logo .icon {
+    width: 60px;
+    height: 60px;
+}
+
+.label {
+    width: 150px;
+    height: 30px;
 }
 
 h4 {

@@ -10,47 +10,52 @@
 
         <div class="container-documents" v-if="this.Store.documents && this.Store.documents.length > 0">
             <div v-if="$i18n.locale === 'fr'" class="nbr-aspects">
-                {{ this.Store.documents?.length }} <strong>{{ this.Store.documents[0]?.aspect?.name }}</strong> {{ $t("en")
-                }}
+                {{ this.Store.documents?.length }} <strong>{{ this.Store.documents[0]?.category?.name }}</strong> {{
+                $t("en")
+            }}
                 <strong>{{
-                    this.Store.documents[0]?.category?.name }}</strong>
+                    this.Store.documents[0]?.aspect?.name }}</strong>
             </div>
             <div v-else class="nbr-aspects">
                 {{ this.Store.documents?.length }} :
                 <strong>{{
-                    this.Store.documents[0]?.category?.name }}</strong> في <strong>{{ this.Store.documents[0]?.aspect?.name
-    }}</strong> عدد
+                this.Store.documents[0]?.aspect?.name }}</strong> في <strong>{{
+                this.Store.documents[0]?.category?.name
+            }}</strong> عدد
             </div>
 
 
             <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="nbr-aspects">
-                <strong>{{ this.Store.documents[0]?.aspect?.name }}</strong> {{ $t("en") }} <strong>{{
-                    this.Store.documents[0]?.category?.name
-                }}</strong> {{ $t('ajouté(e)s récemment') }} :
+                <strong>{{ this.Store.documents[0]?.category?.name }}</strong> {{ $t("en") }} <strong>{{
+                this.Store.documents[0]?.aspect?.name
+            }}</strong> {{ $t('ajouté(e)s récemment') }} :
             </div>
             <swiper class="swiper-container" :modules="modules" :slides-per-view="4" :space-between="50" navigation
                 :pagination="{ clickable: true }" :loop="true" :scrollbar="{ draggable: true }" @swiper="onSwiper"
                 @slideChange="onSlideChange" :autoplay="{ delay: 2500, disableOnInteraction: true }" :speed="500">
-                <swiper-slide class="swiper-slide" v-for="(document, index) in this.Store.documents.slice(-5)" :key="index">
+                <swiper-slide class="swiper-slide" v-for="(document, index) in this.Store.documents.slice(-5)"
+                    :key="index">
                     <DocumentComponent :document="document" />
                 </swiper-slide>
             </swiper>
             <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="nbr-aspects">
                 {{ $t('Tout(e)s les') }} <strong>{{ this.Store.documents[0]?.aspect?.name }}</strong> {{ $t("en") }}
                 <strong>{{
-                    this.Store.documents[0]?.category?.name }}</strong> :
+                this.Store.documents[0]?.category?.name }}</strong> :
             </div>
             <div class="documents-wrapper">
-                <DocumentComponent v-for="(document, index) in this.Store.documents" :key="index" :document="document" />
+                <DocumentComponent v-for="(document, index) in this.Store.documents" :key="index"
+                    :document="document" />
             </div>
         </div>
         <div class="not-found" v-else>
-            <img src="../assets/file-document-svgrepo-com.svg" alt=""> Aucun document dans cet catégorie pour le moment
+            <img src="../assets/file-document-svgrepo-com.svg" alt=""> Aucun document dans cette catégorie pour le
+            moment
         </div>
 
     </div>
 </template>
-  
+
 <script>
 import DocumentComponent from "../components/Document";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -101,7 +106,7 @@ export default {
     }
 };
 </script>
-  
+
 <style scoped>
 @import 'swiper/css';
 @import 'swiper/css/navigation';
