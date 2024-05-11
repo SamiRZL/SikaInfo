@@ -1,30 +1,38 @@
 <template>
   <div class="pdf-container">
-    <div class="transparent"></div>
-    <iframe class="pdf-iframe" :src="`https://sika-info-server.vercel.app/${this.document.pdf}#toolbar=0&view=FitH`"
-      frameborder="0" scrolling="no"></iframe>
+    <VuePdfEmbed :source="pdfUrl" :height="270" :width="200" :page="1" class="pdf-viewer" />
     <div class="separator"></div>
     <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="info-document">
-      <span class="category">{{ this.document.category.name }}</span>
-      <span @click="openNewWindow(this.document.pdf)" class="title">{{
-      this.document.title }}</span>
+      <span class="category">{{ document.category.name }}</span>
+      <span @click="openNewWindow(document.pdf)" class="title">{{ document.title }}</span>
     </div>
   </div>
 </template>
 
 <script>
+import VuePdfEmbed from 'vue-pdf-embed'
+
+// essential styles
+import 'vue-pdf-embed/dist/style/index.css'
+
+// optional styles
+import 'vue-pdf-embed/dist/style/annotationLayer.css'
+import 'vue-pdf-embed/dist/style/textLayer.css'
+
 export default {
   name: 'DocumentComponent',
+  components: {
+    VuePdfEmbed
+  },
   props: ['document'],
   data() {
     return {
+      pdfUrl: `https://sika-info-server.vercel.app/${this.document.pdf}`
     };
   },
   methods: {
     openNewWindow(pdf) {
       const fullPath = `https://sika-info-server.vercel.app/${pdf}`;
-
-      // Open the URL in a new window
       window.open(fullPath, '_blank');
     }
   }
@@ -52,20 +60,17 @@ export default {
     /* Adjust the scale factor as needed */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   }
-
 }
-
 
 .transparent {
   position: absolute;
   width: 100%;
   height: 70%;
-  top: 0
+  top: 0;
 }
 
-.pdf-iframe {
-  width: 100% !important;
-  height: 240px !important;
+.pdf-viewer {
+  width: auto;
   border: 2px solid rgb(50, 54, 57);
   /* Set your desired border style, color, and width */
 }
@@ -95,7 +100,6 @@ export default {
 .title {
   cursor: pointer;
   font-weight: 700;
-  overflow: wrap;
 
   &:hover {
     text-decoration: underline;
