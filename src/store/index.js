@@ -8,9 +8,15 @@ export const useAuthStore = defineStore('auth', {
         categoriesList: [],
         aspectsList: [],
         documents: [],
+        firstname: '',
+        lastname: '',
         AllDocuments: [],
+        source: '',
         language: localStorage.getItem('language') || 'fr',
         isLoading: true,
+        isLogged: null,
+        isOpenLogin: false,
+        pdf: ''
     }),
 
     getters: {
@@ -18,7 +24,26 @@ export const useAuthStore = defineStore('auth', {
     },
 
     actions: {
-
+        openNewWindow(pdf) {
+            this.pdf = pdf;
+            if (this.isLogged) {
+                this.isOpenLogin = false;
+                const fullPath = `https://sika-info-server.vercel.app/${pdf}`;
+                window.open(fullPath, '_blank');
+            } else {
+                this.isOpenLogin = true;
+            }
+        },
+        getUser() {
+            axios.get(`https://sika-info-server.vercel.app/users/loggedUser`, { withCredentials: true })
+                .then((response) => {
+                    console.log("user fetched", response.data);
+                    this.isLogged = response.data.isLoggedIn;
+                    this.firstname = response.data.user.firstname;
+                    this.lastname = response.data.user.lastname;
+                })
+                .catch((error) => { console.log("error logging user", error); })
+        },
         fetchDocumentsByAspect(id) {
             this.isLoading = true;
             axios.get(`https://sika-info-server.vercel.app/documents/aspect/${id}`)

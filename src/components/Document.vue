@@ -1,16 +1,19 @@
 <template>
   <div class="pdf-container">
-    <VuePdfEmbed :source="pdfUrl" :height="270" :width="200" :page="1" class="pdf-viewer" />
+    <VuePdfEmbed :source="pdfUrl" :height="270" :width="auto" :page="1" class="pdf-viewer" />
     <div class="separator"></div>
     <div :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" class="info-document">
       <span class="category">{{ document.category.name }}</span>
-      <span @click="openNewWindow(document.pdf)" class="title">{{ document.title }}</span>
+      <span @click="this.Store.source = 'document'; this.Store.openNewWindow(document.pdf)" class="title">{{
+      document.title
+    }}</span>
     </div>
   </div>
 </template>
 
 <script>
 import VuePdfEmbed from 'vue-pdf-embed'
+import { useAuthStore } from "../store/index";
 
 // essential styles
 import 'vue-pdf-embed/dist/style/index.css'
@@ -22,26 +25,30 @@ import 'vue-pdf-embed/dist/style/textLayer.css'
 export default {
   name: 'DocumentComponent',
   components: {
-    VuePdfEmbed
+    VuePdfEmbed,
   },
   props: ['document'],
   data() {
     return {
-      pdfUrl: `https://sika-info-server.vercel.app/${this.document.pdf}`
+      pdfUrl: `https://sika-info-server.vercel.app/${this.document.pdf}`,
+    };
+  },
+  setup() {
+    const Store = useAuthStore();
+    return {
+      Store
     };
   },
   methods: {
-    openNewWindow(pdf) {
-      const fullPath = `https://sika-info-server.vercel.app/${pdf}`;
-      window.open(fullPath, '_blank');
-    }
+
   }
-};
+}
 </script>
 
 <style scoped>
 .pdf-container {
   display: flex;
+  width: 230px;
   justify-content: center;
   align-items: center;
   flex-direction: column;

@@ -18,7 +18,7 @@ export default {
 
 <style>
 * {
-  font-family: Noticia Text, Helvetica, Arial, sans-serif;
+  font-family: Open Sans, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
@@ -29,6 +29,6 @@ export default {
 }
 
 body {
-  background: #FFF7ED;
+  background: #FDFDF9;
 }
 </style>

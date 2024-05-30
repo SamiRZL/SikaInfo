@@ -86,6 +86,7 @@ export default {
     },
 
     methods: {
+
         navigateToDocumentPath(id) {
             let aspectId = this.$route?.query?.aspectId || (this.Store.aspectsList[0]?._id);
             let path = `documents/${aspectId}/${id}`;
@@ -183,7 +184,7 @@ export default {
     flex-grow: 1;
     background: #f2f2f2;
     cursor: pointer;
-    font-family: "Noticia Text", serif;
+    font-family: "Open Sans", serif;
     font-weight: 500;
     font-style: normal;
 
@@ -216,7 +217,7 @@ export default {
     padding: 0.5rem 1rem;
     flex-grow: 1;
     font-size: 1.5rem;
-    font-family: "Noticia Text", serif;
+    font-family: "Open Sans", serif;
     font-weight: 500;
     font-style: normal;
     border-radius: 3px;
@@ -243,7 +244,7 @@ strong {
     padding: 0.5rem 1rem;
     flex-grow: 1;
     font-size: 1.5rem;
-    font-family: "Noticia Text", serif;
+    font-family: "Open Sans", serif;
     font-weight: 500;
     font-style: normal;
     border-radius: 3px;

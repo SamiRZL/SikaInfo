@@ -1,11 +1,12 @@
 <template>
     <nav>
+        <LoginCard :source="this.Store.source" :isOpen="this.Store.isOpenLogin" :pdf="this.Store.pdf" />
         <div class="left-side">
             <div @click="this.$router.push({
-                path: `/`,
-            });" class="logo">
-                <img class="icon" src="../assets/Image3.png" alt="">
-                <img class="label" src="../assets/Image4.png" alt="">
+            path: `/`,
+        });" class="logo">
+                <img class="icon" src="../assets/logo_sika_final.png" alt="">
+
             </div>
             <div class="search-bar">
                 <input :class="this.$i18n.locale == 'fr' ? 'input-french' : 'input-arabe'"
@@ -17,12 +18,15 @@
                 <div v-if="filteredDocuments" class="dropdown">
                     <div v-for="document in filteredDocuments" @click="openNewWindow(document.pdf)"
                         :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'" :key="document._id" class="document-row">{{
-                document.title
-            }}</div>
+            document.title
+        }}</div>
                 </div>
             </div>
         </div>
         <div class="right">
+            <button v-if="!this.Store.isLogged" @click="this.Store.source = 'navbar'; this.Store.isOpenLogin = true;">Se
+                connecter</button>
+            <h3 v-else>{{ this.Store.firstname }} {{ this.Store.lastname }}</h3>
             <div @click="openDropdown()" class="language-container">
                 <h4 v-if="this.$i18n.locale == 'fr'">FRA</h4>
                 <h4 v-else>عربية</h4>
@@ -41,10 +45,13 @@
 
 <script>
 import { useAuthStore } from "../store/index";
+import LoginCard from "@/components/LoginCard"
+
 
 export default {
     name: 'NavBar',
     components: {
+        LoginCard
     },
     data() {
         return {
@@ -92,6 +99,7 @@ export default {
     },
     mounted() {
         this.Store.fetchDocuments(this.$i18n.locale);
+        this.Store.getUser();
     },
     computed: {
         filteredDocuments() {
@@ -105,7 +113,7 @@ export default {
 nav {
     width: 100%;
     height: 5rem;
-    background: #3498db;
+    background: #f39c12;
     display: flex;
     align-items: center;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -119,14 +127,93 @@ nav {
     display: flex;
     align-items: center;
     width: 80%;
-    justify-content: space-evenly;
+    gap: 10rem;
+    padding: 5rem;
 }
 
 .right {
-    width: 7%;
+    width: 15%;
     display: flex;
     align-items: center;
+    justify-content: space-around;
+
 }
+
+button {
+    background: #fff;
+    color: #3498db;
+    padding: 0.8rem;
+    outline: none;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    font-weight: 700;
+    border-radius: 30px;
+
+    &:hover {
+        scale: 1.1;
+        transition: scale 0.2s ease;
+    }
+}
+
+
+.language-container {
+    width: 4rem;
+    height: 2.4rem;
+    background: #fff;
+    display: flex;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+}
+
+.language-dropdown {
+    width: 4rem;
+    height: auto;
+    top: 90%;
+    background: #fff;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 3px;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #ccc;
+    border-top: none;
+    cursor: pointer;
+
+
+}
+
+.language-dropdown>div {
+    border-top: 1px solid #ccc;
+    width: 90%;
+    height: 30px;
+    padding: 3px;
+    font-size: small;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-style: normal;
+
+    &:hover {
+        color: #3498db;
+    }
+}
+
+
 
 .logo {
     width: 5%;
@@ -162,6 +249,12 @@ nav {
 
 h4 {
     color: #3498db;
+    font-size: small;
+}
+
+h3 {
+    color: #fff;
+    font-size: 0.9rem;
 }
 
 
@@ -177,6 +270,8 @@ h4 {
     justify-content: space-evenly;
     padding: 5px;
     position: relative;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+
 }
 
 .dropdown {
@@ -242,56 +337,6 @@ h4 {
 
 
 
-.language-container {
-    width: 5rem;
-    height: 2.8rem;
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 7px;
-    position: relative;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-
-
-}
-
-.language-dropdown {
-    width: 5rem;
-    height: auto;
-    top: 90%;
-    background: #fff;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 3px;
-    border-radius: 0 0 5px 5px;
-    border: 1px solid #ccc;
-    border-top: none;
-    cursor: pointer;
-
-
-}
-
-.language-dropdown>div {
-    border-top: 1px solid #ccc;
-    width: 90%;
-    height: 30px;
-    padding: 3px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 600;
-    font-style: normal;
-
-    &:hover {
-        color: #3498db;
-    }
-}
 
 .language-icon {
     width: 30px;
